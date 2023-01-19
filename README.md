@@ -14,3 +14,12 @@
     Enter a name for your application and specify the authorized JavaScript origins and redirect URIs.
     Click on the "Create" button.
     A client ID and client secret will be generated for you.
+
+    Add Client id and client secret in config.js and do node index.js ..!!
+    
+    You need to redirect to open http://localhost:3000/login
+    
+    and do the authentication with the gmail id which you have used in google cloud console.
+    
+    Voila after authentication u can check the console showing email messages with OTP
+    
