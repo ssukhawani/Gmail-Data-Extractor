@@ -5,7 +5,7 @@ const CLIENT_ID =
 const CLIENT_SECRET =
   process.env.CLIENT_ID || "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";
 const REDIRECT_URI = `${
-  process.env.BASE_URL || "http://localhost:3000"
+  process.env.BASE_URL || "https://gmail-data-extractor.vercel.app"
 }/callback`;
 
 module.exports = {
