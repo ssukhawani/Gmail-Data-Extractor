@@ -1,22 +1,29 @@
 const { google } = require("googleapis");
+const { extractOTP } = require("./utils");
 
-async function getMessages(auth) {
+// in:inbox from:(no-reply@razorpay.com) subject:otp
+async function getMessages(auth, payload) {
+  const { from_email, subject } = payload;
+  // console.log(payload, "payload");
   const gmail = google.gmail({ version: "v1", auth });
   try {
     const res = await gmail.users.messages.list({
       userId: "me",
-      q: "from:Otp",
+      q: `in:inbox from:(${from_email}) subject:${subject}`,
+      maxResults: 10,
     });
     const messages = res.data.messages;
     const messagesData = [];
-    for (const message of messages) {
-      const msg = await gmail.users.messages.get({
-        userId: "me",
-        id: message.id,
-      });
-      messagesData.push(msg.data);
+    if (messages) {
+      for (const message of messages) {
+        const msg = await gmail.users.messages.get({
+          userId: "me",
+          id: message.id,
+        });
+        messagesData.push(msg.data);
+      }
     }
-    return messagesData;
+    return extractOTP(messagesData[0].snippet);
   } catch (err) {
     console.log(`The API returned an error: ${err}`);
   }
