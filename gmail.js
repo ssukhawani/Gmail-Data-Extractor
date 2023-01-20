@@ -12,10 +12,10 @@ async function getMessages(auth, payload) {
       q: `in:inbox from:(${from_email}) subject:${subject}`,
       maxResults: 10,
     });
-    console.log(res.data, "OTP");
+    console.log(res, "OTP");
     const messages = res.data.messages;
     const messagesData = [];
-    if (messages) {
+    if (res.data && messages) {
       for (const message of messages) {
         const msg = await gmail.users.messages.get({
           userId: "me",
@@ -24,6 +24,7 @@ async function getMessages(auth, payload) {
         messagesData.push(msg.data);
       }
     }
+    console.log(messagesData, "messagesData");
     return extractOTP(messagesData[0].snippet);
   } catch (err) {
     console.log(`The API returned an error: ${err}`);

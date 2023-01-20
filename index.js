@@ -22,14 +22,14 @@ app.get("/login", (req, res) => {
 
 app.get("/callback", async (req, res) => {
   const { code } = req.query;
-  // console.log(code, "code");
+  console.log(code, "code");
   const auth = await getAuth(code);
-  // console.log(auth, "auth");
+  console.log(auth, "auth");
   console.log(searchPayload, "searchPayload");
   const otp = await getMessages(auth, searchPayload);
   // extract the data you need from the messages
   console.log(otp, "OTP");
-  res.send({ message: "You are now logged in!", otp: otp });
+  res.send({ message: "You are now logged in!", otp });
 });
 
 app.listen(3000, () => {
