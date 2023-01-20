@@ -1,6 +1,7 @@
 const { google } = require("googleapis");
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } = require("./config");
 
-async function getAuth(code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
+async function getAuth(code) {
   const oauth2Client = new google.auth.OAuth2(
     CLIENT_ID,
     CLIENT_SECRET,

@@ -1,6 +1,7 @@
 const express = require("express");
 const { getAuth } = require("./auth");
 const { getMessages } = require("./gmail");
+const { CLIENT_ID, REDIRECT_URI } = require("./config");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -8,18 +9,6 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors());
-
-// This client id and secret has been created from https://console.cloud.google.com
-const CLIENT_ID =
-  process.env.CLIENT_ID ||
-  "1089926294577-udjqsnucud7h71oa6ihhoa94f5is3b4l.apps.googleusercontent.com";
-const CLIENT_SECRET =
-  process.env.CLIENT_ID || "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";
-const REDIRECT_URI = `${
-  process.env.BASE_URL || "https://gmail-data-extractor.vercel.app"
-}/callback`;
-
-console.log({ CLIENT_ID, CLIENT_SECRET, REDIRECT_URI });
 
 let searchPayload;
 app.get("/login", (req, res) => {
@@ -35,7 +24,7 @@ app.get("/login", (req, res) => {
 app.get("/callback", async (req, res) => {
   const { code } = req.query;
   // console.log(code, "code");
-  const auth = await getAuth(code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+  const auth = await getAuth(code);
   // console.log(auth, "auth");
   console.log(searchPayload, "searchPayload");
   const otp = await getMessages(auth, searchPayload);

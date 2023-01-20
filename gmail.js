@@ -4,7 +4,7 @@ const { extractOTP } = require("./utils");
 // in:inbox from:(no-reply@razorpay.com) subject:otp
 async function getMessages(auth, payload) {
   const { from_email, subject } = payload;
-  console.log(payload, "payload");
+  console.log(auth, "auth");
   const gmail = google.gmail({ version: "v1", auth });
   try {
     const res = await gmail.users.messages.list({
