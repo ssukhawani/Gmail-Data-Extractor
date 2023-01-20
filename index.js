@@ -3,7 +3,6 @@ const { getAuth } = require("./auth");
 const { getMessages } = require("./gmail");
 const { CLIENT_ID, REDIRECT_URI } = require("./config");
 
-require("dotenv").config();
 const cors = require("cors");
 
 const app = express();
