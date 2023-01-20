@@ -24,8 +24,8 @@ app.get("/callback", async (req, res) => {
   // console.log(auth, "auth");
   const otp = await getMessages(auth, searchPayload);
   // extract the data you need from the messages
-  // console.log(otp, "OTP");
-  res.send({ message: "You are now logged in!", otp });
+  console.log(otp, "OTP");
+  res.send({ message: "You are now logged in!", otp: otp });
 });
 
 app.listen(3000, () => {
