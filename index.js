@@ -2,8 +2,12 @@ const express = require("express");
 const { getAuth } = require("./auth");
 const { getMessages } = require("./gmail");
 const { CLIENT_ID, REDIRECT_URI } = require("./config");
+
+const cors = require("cors");
+
 const app = express();
 
+app.use(cors());
 require("dotenv").config();
 
 let searchPayload;
