@@ -4,6 +4,8 @@ const { getMessages } = require("./gmail");
 const { CLIENT_ID, REDIRECT_URI } = require("./config");
 const app = express();
 
+require("dotenv").config();
+
 let searchPayload;
 app.get("/login", (req, res) => {
   // console.log(req._parsedUrl.search, "params");
@@ -20,10 +22,10 @@ app.get("/callback", async (req, res) => {
   // console.log(code, "code");
   const auth = await getAuth(code);
   // console.log(auth, "auth");
-  const messages = await getMessages(auth, searchPayload);
+  const otp = await getMessages(auth, searchPayload);
   // extract the data you need from the messages
-  console.log(messages, "OTP");
-  res.send("You are now logged in!");
+  // console.log(otp, "OTP");
+  res.send({ message: "You are now logged in!", otp });
 });
 
 app.listen(3000, () => {
