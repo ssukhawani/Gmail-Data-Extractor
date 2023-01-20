@@ -19,6 +19,8 @@ const REDIRECT_URI = `${
   process.env.BASE_URL || "https://gmail-data-extractor.vercel.app"
 }/callback`;
 
+console.log({ CLIENT_ID, CLIENT_SECRET, REDIRECT_URI });
+
 let searchPayload;
 app.get("/login", (req, res) => {
   // console.log(req._parsedUrl.search, "params");
@@ -35,6 +37,7 @@ app.get("/callback", async (req, res) => {
   // console.log(code, "code");
   const auth = await getAuth(code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
   // console.log(auth, "auth");
+  console.log(searchPayload, "searchPayload");
   const otp = await getMessages(auth, searchPayload);
   // extract the data you need from the messages
   console.log(otp, "OTP");
