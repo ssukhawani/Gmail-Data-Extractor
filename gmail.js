@@ -3,7 +3,7 @@ const { extractOTP } = require("./utils");
 
 // in:inbox from:(no-reply@razorpay.com) subject:otp
 async function getMessages(auth, payload) {
-  const { from_email, subject } = payload;
+  const { from_email, subject, otpDigits } = payload;
   console.log(auth, "auth");
   const gmail = google.gmail({ version: "v1", auth });
   try {
@@ -25,7 +25,8 @@ async function getMessages(auth, payload) {
       }
     }
     console.log(messagesData, "messagesData");
-    return extractOTP(messagesData[0].snippet);
+    const digits = Boolean(otpDigits) ? otpDigits : 6;
+    return extractOTP(messagesData[0].snippet, digits);
   } catch (err) {
     console.log(`The API returned an error: ${err}`);
   }
